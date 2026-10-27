@@ -244,12 +244,12 @@ function Metric({ label, value, mono }: { label: string; value: string; mono?: b
   );
 }
 
-function pctClass(v?: number) {
+function pctClass(v?: number | undefined) {
   if (v === undefined) return "text-muted-foreground";
   return v >= 0 ? "text-success" : "text-destructive";
 }
 
-function Change({ label, v, v2 }: { label: string; v?: number; v2?: number }) {
+function Change({ label, v, v2 }: { label: string; v?: number | undefined; v2?: number | undefined }) {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="text-xs text-muted-foreground">Change {label}</div>

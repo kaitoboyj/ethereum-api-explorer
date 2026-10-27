@@ -9,7 +9,7 @@ export function formatUsd(value?: number | string | null): string {
     // tiny prices: show significant digits, e.g. $0.0₅1234
     const s = n.toFixed(20);
     const m = s.match(/^0\.(0+)(\d{1,4})/);
-    if (m && m[1].length >= 4) return `$0.0${subscript(m[1].length)}${m[2]}`;
+    if (m?.[1] && m[2] && m[1].length >= 4) return `$0.0${subscript(m[1].length)}${m[2]}`;
     return `$${n.toPrecision(4)}`;
   }
   if (Math.abs(n) < 1) return `$${n.toFixed(4)}`;

@@ -1,5 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { ChevronDown, Check, Menu } from "lucide-react";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { CHAINS } from "@/lib/chains";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -44,9 +47,7 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-3">
-          <span className="hidden items-center gap-2 rounded-md border bg-surface px-2.5 py-1 font-mono text-xs text-muted-foreground sm:flex">
-            <span className="size-1.5 rounded-full bg-success" /> EVM · 7 networks
-          </span>
+          <NetworkMenu />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
@@ -71,5 +72,43 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
+  );
+}
+
+function NetworkMenu() {
+  const navigate = useNavigate();
+  const current = useRouterState({
+    select: (s) => {
+      const m = s.location.pathname.match(/^\/analyze\/([^/]+)/);
+      return m?.[1] ?? (s.location.search as { chain?: string }).chain;
+    },
+  });
+  const active = CHAINS.find((c) => c.slug === current);
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex items-center gap-2 rounded-md border bg-surface px-2.5 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground">
+        <span className="size-1.5 rounded-full bg-success" />
+        {active ? active.name : "EVM · 7 networks"}
+        <ChevronDown className="size-3.5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="text-xs text-muted-foreground">Select EVM network</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {CHAINS.map((c) => (
+          <DropdownMenuItem
+            key={c.slug}
+            onSelect={() => navigate({ to: "/analyze", search: { chain: c.slug } })}
+            className="flex justify-between"
+          >
+            <span>{c.name}</span>
+            {active?.slug === c.slug ? (
+              <Check className="size-3.5 text-primary" />
+            ) : (
+              <span className="font-mono text-xs text-muted-foreground">{c.chainId}</span>
+            )}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

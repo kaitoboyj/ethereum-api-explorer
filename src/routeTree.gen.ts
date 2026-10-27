@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as SubmissionsRouteImport } from './routes/submissions'
+import { Route as SubmitContractRouteImport } from './routes/submit-contract'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as AnalyzeIndexRouteImport } from './routes/analyze.index'
+import { Route as AnalyzeChainIdAddressRouteImport } from './routes/analyze.$chainId.$address'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubmissionsRoute = SubmissionsRouteImport.update({
+  id: '/submissions',
+  path: '/submissions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubmitContractRoute = SubmitContractRouteImport.update({
+  id: '/submit-contract',
+  path: '/submit-contract',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyzeIndexRoute = AnalyzeIndexRouteImport.update({
+  id: '/analyze/',
+  path: '/analyze/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyzeChainIdAddressRoute = AnalyzeChainIdAddressRouteImport.update({
+  id: '/analyze/$chainId/$address',
+  path: '/analyze/$chainId/$address',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
+  '/submissions': typeof SubmissionsRoute
+  '/submit-contract': typeof SubmitContractRoute
+  '/support': typeof SupportRoute
+  '/analyze/': typeof AnalyzeIndexRoute
+  '/analyze/$chainId/$address': typeof AnalyzeChainIdAddressRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
+  '/submissions': typeof SubmissionsRoute
+  '/submit-contract': typeof SubmitContractRoute
+  '/support': typeof SupportRoute
+  '/analyze': typeof AnalyzeIndexRoute
+  '/analyze/$chainId/$address': typeof AnalyzeChainIdAddressRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/docs': typeof DocsRoute
+  '/submissions': typeof SubmissionsRoute
+  '/submit-contract': typeof SubmitContractRoute
+  '/support': typeof SupportRoute
+  '/analyze/': typeof AnalyzeIndexRoute
+  '/analyze/$chainId/$address': typeof AnalyzeChainIdAddressRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/docs'
+    | '/submissions'
+    | '/submit-contract'
+    | '/support'
+    | '/analyze/'
+    | '/analyze/$chainId/$address'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/docs'
+    | '/submissions'
+    | '/submit-contract'
+    | '/support'
+    | '/analyze'
+    | '/analyze/$chainId/$address'
+  id:
+    | '__root__'
+    | '/'
+    | '/docs'
+    | '/submissions'
+    | '/submit-contract'
+    | '/support'
+    | '/analyze/'
+    | '/analyze/$chainId/$address'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DocsRoute: typeof DocsRoute
+  SubmissionsRoute: typeof SubmissionsRoute
+  SubmitContractRoute: typeof SubmitContractRoute
+  SupportRoute: typeof SupportRoute
+  AnalyzeIndexRoute: typeof AnalyzeIndexRoute
+  AnalyzeChainIdAddressRoute: typeof AnalyzeChainIdAddressRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/submissions': {
+      id: '/submissions'
+      path: '/submissions'
+      fullPath: '/submissions'
+      preLoaderRoute: typeof SubmissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/submit-contract': {
+      id: '/submit-contract'
+      path: '/submit-contract'
+      fullPath: '/submit-contract'
+      preLoaderRoute: typeof SubmitContractRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analyze/': {
+      id: '/analyze/'
+      path: '/analyze'
+      fullPath: '/analyze/'
+      preLoaderRoute: typeof AnalyzeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analyze/$chainId/$address': {
+      id: '/analyze/$chainId/$address'
+      path: '/analyze/$chainId/$address'
+      fullPath: '/analyze/$chainId/$address'
+      preLoaderRoute: typeof AnalyzeChainIdAddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DocsRoute: DocsRoute,
+  SubmissionsRoute: SubmissionsRoute,
+  SubmitContractRoute: SubmitContractRoute,
+  SupportRoute: SupportRoute,
+  AnalyzeIndexRoute: AnalyzeIndexRoute,
+  AnalyzeChainIdAddressRoute: AnalyzeChainIdAddressRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

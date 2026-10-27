@@ -57,7 +57,9 @@ function AnalyzePage() {
     );
   }
 
-  const pairs = q.data;
+  // Pairs where the looked-up token is the base token carry its own price, so list them first.
+  const isBase = (p: { baseToken: { address: string } }) => p.baseToken.address.toLowerCase() === address;
+  const pairs = [...q.data].sort((a, b) => Number(isBase(b)) - Number(isBase(a)));
   if (pairs.length === 0) {
     return (
       <Shell>
@@ -74,9 +76,9 @@ function AnalyzePage() {
     );
   }
 
-  const pair = pairs[Math.min(selected, pairs.length - 1)];
-  const token =
-    pair.baseToken.address.toLowerCase() === address ? pair.baseToken : pair.quoteToken;
+  const pair = pairs[Math.min(selected, pairs.length - 1)] ?? pairs[0]!;
+  const token = isBase(pair) ? pair.baseToken : pair.quoteToken;
+  const tx24 = pair.txns?.["h24"];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">

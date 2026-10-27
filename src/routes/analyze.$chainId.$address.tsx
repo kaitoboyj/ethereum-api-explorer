@@ -69,7 +69,7 @@ function AnalyzePage() {
           text={`DexScreener has no pairs for this address on ${chain.name}. Check the network or address.`}
         >
           <Button variant="outline" asChild>
-            <Link to="/analyze">Try another address</Link>
+            <Link to="/analyze" search={{ chain: chainId }}>Try another address</Link>
           </Button>
         </Empty>
       </Shell>

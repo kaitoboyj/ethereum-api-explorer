@@ -120,7 +120,7 @@ function AnalyzePage() {
       />
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Metric label="Price" value={formatUsd(pair.priceUsd)} mono />
+        <Metric label={isBase(pair) ? "Price" : `Price (${pair.baseToken.symbol})`} value={formatUsd(pair.priceUsd)} mono />
         <Metric label="Market cap" value={formatUsd(pair.marketCap)} />
         <Metric label="FDV" value={formatUsd(pair.fdv)} />
         <Metric label="Liquidity" value={formatUsd(pair.liquidity?.usd)} />
@@ -169,7 +169,7 @@ function AnalyzePage() {
               ["DEX", pair.dexId],
               ["Pair address", <Addr key="pa" a={pair.pairAddress} />],
               ["Created", formatDate(pair.pairCreatedAt)],
-              ["Txns 24h", pair.txns?.h24 ? `${pair.txns.h24.buys} buys · ${pair.txns.h24.sells} sells` : NA],
+              ["Txns 24h", tx24 ? `${tx24.buys} buys · ${tx24.sells} sells` : NA],
             ]}
           />
         </Section>

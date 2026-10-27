@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
 import { getChain, isEvmAddress } from "@/lib/chains";
-import { tokenPairsQuery, type DexPair } from "@/lib/dexscreener";
+import { tokenPairsQuery } from "@/lib/dexscreener";
 import { formatDate, formatPct, formatUsd, NA, shortAddr } from "@/lib/format";
 
 export const Route = createFileRoute("/analyze/$chainId/$address")({
@@ -289,4 +289,3 @@ function Addr({ a }: { a: string }) {
   );
 }
 
-export type { DexPair };

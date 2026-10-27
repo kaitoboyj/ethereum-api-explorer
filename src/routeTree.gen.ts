@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzeIndexRouteImport } from './routes/analyze.index'
+import { Route as AnalyzeChainIdAddressRouteImport } from './routes/analyze.$chainId.$address'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const AnalyzeIndexRoute = AnalyzeIndexRouteImport.update({
   path: '/analyze/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyzeChainIdAddressRoute = AnalyzeChainIdAddressRouteImport.update({
+  id: '/analyze/$chainId/$address',
+  path: '/analyze/$chainId/$address',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analyze/': typeof AnalyzeIndexRoute
+  '/analyze/$chainId/$address': typeof AnalyzeChainIdAddressRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeIndexRoute
+  '/analyze/$chainId/$address': typeof AnalyzeChainIdAddressRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analyze/': typeof AnalyzeIndexRoute
+  '/analyze/$chainId/$address': typeof AnalyzeChainIdAddressRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analyze/'
+  fullPaths: '/' | '/analyze/' | '/analyze/$chainId/$address'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analyze'
-  id: '__root__' | '/' | '/analyze/'
+  to: '/' | '/analyze' | '/analyze/$chainId/$address'
+  id: '__root__' | '/' | '/analyze/' | '/analyze/$chainId/$address'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyzeIndexRoute: typeof AnalyzeIndexRoute
+  AnalyzeChainIdAddressRoute: typeof AnalyzeChainIdAddressRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnalyzeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analyze/$chainId/$address': {
+      id: '/analyze/$chainId/$address'
+      path: '/analyze/$chainId/$address'
+      fullPath: '/analyze/$chainId/$address'
+      preLoaderRoute: typeof AnalyzeChainIdAddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyzeIndexRoute: AnalyzeIndexRoute,
+  AnalyzeChainIdAddressRoute: AnalyzeChainIdAddressRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

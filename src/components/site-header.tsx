@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const NAV = [
   { to: "/", label: "Overview" },
-  { to: "/analyze/", label: "Token Analyzer" },
+  { to: "/analyze", label: "Token Analyzer" },
   { to: "/submit-contract", label: "Submit Contract" },
   { to: "/submissions", label: "My Submissions" },
   { to: "/docs", label: "Documentation" },
